@@ -1,0 +1,109 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --------------------------------------------- */
+/*      GLOBAL BODY STYLE — GLASS + DARK UI      */
+/* --------------------------------------------- */
+body {
+  @apply bg-neutral-950 text-neutral-100 antialiased;
+}
+
+/* Remove Scrollbars (Modern look) */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  scrollbar-width: none;
+}
+
+/* Soft Fade on Page Load */
+@keyframes fadeInSlow {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.animate-fadeInSlow {
+  animation: fadeInSlow 0.6s ease-out;
+}
+
+/* Card Fade-in from Bottom */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeInUp {
+  animation: fadeInUp 0.35s ease-out;
+}
+
+/* Ripple Effect for Buttons */
+.ripple {
+  position: relative;
+  overflow: hidden;
+}
+.ripple:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background: radial-gradient(circle, rgba(255,255,255,0.3) 10%, transparent 10%);
+  transform: scale(10);
+  transition: transform 0.4s, opacity 0.8s;
+}
+.ripple:active:after {
+  opacity: 1;
+  transform: scale(0);
+  transition: 0s;
+}
+
+/* Input Style */
+.input {
+  @apply px-3 py-2 bg-neutral-800 border border-neutral-700 rounded-xl 
+    focus:outline-none focus:ring-2 focus:ring-sky-600 
+    transition-all duration-200;
+}
+
+/* Premium Card UI */
+.card-glass {
+  @apply rounded-2xl border border-neutral-800/60 
+    bg-gradient-to-b from-neutral-950/70 to-neutral-900/40 
+    backdrop-blur-xl 
+    shadow-xl shadow-black/40 
+    transition-all duration-500 
+    hover:scale-[1.01] hover:shadow-2xl hover:shadow-black/50;
+}
+
+/* Neon Badge Glow */
+.badge {
+  @apply text-xs px-2 py-0.5 rounded-full border shadow-lg;
+}
+.badge-sky {
+  @apply bg-sky-600/20 text-sky-300 border-sky-600/40 
+         shadow-[0_0_8px_rgba(56,189,248,0.4)];
+}
+.badge-red {
+  @apply bg-red-600/20 text-red-400 border-red-600/40 
+         shadow-[0_0_8px_rgba(248,113,113,0.4)];
+}
+
+/* Buttons - premium feel */
+.btn {
+  @apply ripple rounded-xl px-4 py-2 transition-all duration-300;
+}
+.btn-primary {
+  @apply bg-sky-600 hover:bg-sky-500 text-white;
+}
+.btn-secondary {
+  @apply bg-neutral-700 hover:bg-neutral-600;
+}
+.btn-danger {
+  @apply bg-red-600 hover:bg-red-500;
+}
+.btn-success {
+  @apply bg-green-600 hover:bg-green-500;
+}
+/* FIX: Show calendar icon in date input */
+[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);   /* make icon visible on dark bg */
+  opacity: 1 !important;
+  cursor: pointer;
+}
