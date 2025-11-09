@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Vouchers from "./pages/Vouchers";
 import TopBar from "./components/TopBar";
+import Home from "./pages/Home";
 import { supabase } from "./supabase";
 import { useEffect, useState } from "react";
 import type { JSX } from "react";
@@ -51,12 +52,14 @@ export default function App() {
   return (
     <div className="min-h-screen">
       <TopBar />
+
       <div className="mx-auto max-w-6xl p-4">
+
         <Routes>
+          {/* ✅ Home page */}
+          <Route path="/" element={<Home />} />
 
-          {/* ✅ Only ONE root route */}
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
-
+          {/* ✅ Protected routes */}
           <Route
             path="/dashboard"
             element={
@@ -75,13 +78,14 @@ export default function App() {
             }
           />
 
+          {/* ✅ Auth pages */}
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
 
-          {/* ✅ Remove duplicate "/" route */}
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
-
+          {/* ✅ Fallback */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
+
       </div>
     </div>
   );
