@@ -4,9 +4,10 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Vouchers from "./pages/Vouchers";
 import TopBar from "./components/TopBar";
+import Home from "./pages/Home";
 import { supabase } from "./supabase";
 import { useEffect, useState } from "react";
-import Home from "./pages/Home";
+import type { JSX } from "react";
 
 function ProtectedRoute({ children }: { children: JSX.Element }) {
   const [loading, setLoading] = useState(true);
@@ -15,14 +16,17 @@ function ProtectedRoute({ children }: { children: JSX.Element }) {
 
   useEffect(() => {
     let mounted = true;
+
     supabase.auth.getSession().then(({ data }) => {
       if (!mounted) return;
       setHasSession(!!data.session);
       setLoading(false);
     });
+
     const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
       setHasSession(!!session);
     });
+
     return () => {
       mounted = false;
       sub.subscription.unsubscribe();
@@ -48,12 +52,14 @@ export default function App() {
   return (
     <div className="min-h-screen">
       <TopBar />
+
       <div className="mx-auto max-w-6xl p-4">
+
         <Routes>
-          <Route
-            path="/"
-            element={<Navigate to="/dashboard" replace />}
-          />
+          {/* ✅ Home page */}
+          <Route path="/" element={<Home />} />
+
+          {/* ✅ Protected routes */}
           <Route
             path="/dashboard"
             element={
@@ -62,6 +68,7 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/vouchers"
             element={
@@ -70,11 +77,15 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+
+          {/* ✅ Auth pages */}
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
-          <Route path="/" element={<Home />} />
+
+          {/* ✅ Fallback */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
+
       </div>
     </div>
   );
