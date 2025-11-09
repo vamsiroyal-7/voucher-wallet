@@ -6,8 +6,8 @@ import Vouchers from "./pages/Vouchers";
 import TopBar from "./components/TopBar";
 import { supabase } from "./supabase";
 import { useEffect, useState } from "react";
-import Home from "./pages/Home";
 import type { JSX } from "react";
+
 function ProtectedRoute({ children }: { children: JSX.Element }) {
   const [loading, setLoading] = useState(true);
   const [hasSession, setHasSession] = useState(false);
@@ -15,14 +15,17 @@ function ProtectedRoute({ children }: { children: JSX.Element }) {
 
   useEffect(() => {
     let mounted = true;
+
     supabase.auth.getSession().then(({ data }) => {
       if (!mounted) return;
       setHasSession(!!data.session);
       setLoading(false);
     });
+
     const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
       setHasSession(!!session);
     });
+
     return () => {
       mounted = false;
       sub.subscription.unsubscribe();
@@ -50,10 +53,10 @@ export default function App() {
       <TopBar />
       <div className="mx-auto max-w-6xl p-4">
         <Routes>
-          <Route
-            path="/"
-            element={<Navigate to="/dashboard" replace />}
-          />
+
+          {/* ✅ Only ONE root route */}
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+
           <Route
             path="/dashboard"
             element={
@@ -62,6 +65,7 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/vouchers"
             element={
@@ -70,10 +74,13 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+
+          {/* ✅ Remove duplicate "/" route */}
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
-          <Route path="/" element={<Home />} />
+
         </Routes>
       </div>
     </div>
