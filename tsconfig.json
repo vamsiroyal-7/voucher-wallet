@@ -1,13 +1,23 @@
 {
   "compilerOptions": {
-    "jsx": "react-jsx",
-    "module": "ESNext",
     "target": "ES2020",
-    "lib": ["DOM", "ES2020"],
+    "lib": ["DOM", "DOM.Iterable", "ES2020"],
+    "module": "ESNext",
     "moduleResolution": "bundler",
-    "esModuleInterop": true,
+
+    "jsx": "react-jsx",
+
+    "strict": true,
     "skipLibCheck": true,
-    "strict": false,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+
+    "verbatimModuleSyntax": false,
+    "noEmit": true,
+    "resolveJsonModule": true,
     "types": ["vite/client"]
   },
   "include": ["src"]

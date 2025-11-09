@@ -7,7 +7,7 @@ import TopBar from "./components/TopBar";
 import { supabase } from "./supabase";
 import { useEffect, useState } from "react";
 import Home from "./pages/Home";
-
+import type { JSX } from "react";
 function ProtectedRoute({ children }: { children: JSX.Element }) {
   const [loading, setLoading] = useState(true);
   const [hasSession, setHasSession] = useState(false);
